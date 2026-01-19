@@ -312,6 +312,15 @@ function offerTimes(c1) {
 /* conditional formatting */
 // E2:E=IF(ISBLANK(A2),false,IF(ROW()=2,true,OR(ARRAYFORMULA(WEEKDAY(SEQUENCE(DATEDIF(A2,A1,"D"),1,A2+1))=2))))
 
+/* values */
+/* A1:E1
+date
+minutes
+hours
+hrs last 7 days
+week's total hrs
+*/
+
 /* notes */
 // F1=average hours per work day
 /*** EOF ***/
