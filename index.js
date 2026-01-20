@@ -301,7 +301,6 @@ function offerTimes(c1) {
   const [[a], [_], [c], [d], [e]] = sheet.getRange(1, c1, 5, 1).getValues()
   if (!(a instanceof Date) || IdURL(c) === null || d || e) return;
   const [lo, hi] = estimateTimes(sheet, c1)
-  console.log(c1, lo, hi)
   sheet.getRange(4, c1).setValue(lo)
   sheet.getRange(5, c1).setValue(hi)
 }
