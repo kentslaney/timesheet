@@ -3,6 +3,11 @@
 /*** timer ***/
 /* primary sheet */
 
+/** 0.1 **/ /* buttons */
+// A6=mark
+// A7=newNotes
+// A8=dupNotes
+
 /* formulas */
 // B3=LAMBDA(t,IF(AND(TODAY()=B1,$A$1>B2),QUOTIENT(MOD(t,24*60),60)*100+MOD(t, 60),""))(QUOTIENT($A$1, 100)*60+MOD($A$1,100)-(SUM(BYROW({B4:B,ARRAYFORMULA(ROW(B4:B))},LAMBDA(row,(QUOTIENT(INDEX(row,1), 100)*60+MOD(INDEX(row,1),100))*IF(MOD(INDEX(row,2),2),1,-1))))-IF(MOD(COUNTA(B4:B),2),,QUOTIENT($A$5, 100)*60+MOD($A$5,100))))
 // B2=LAMBDA(t,QUOTIENT(t,60)*100+MOD(t, 60))(SUM(BYROW({B4:B,ARRAYFORMULA(ROW(B4:B))},LAMBDA(row,(QUOTIENT(INDEX(row,1), 100)*60+MOD(INDEX(row,1),100))*IF(MOD(INDEX(row,2),2),1,-1))))+IF(MOD(COUNTA(B4:B),2),IF(TODAY()=B1,QUOTIENT($A$5, 100)*60+MOD($A$5,100),24*60)))
