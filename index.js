@@ -287,6 +287,7 @@ function filterRevisionDay(fileId, day) {
 
 function editTimeBounds(fileId, day) {
   const revisions = filterRevisionDay(fileId, day)
+  if (revisions.length === 0) return [-2400, -2400]
   const start = dateFormat(revisions[0])
   const end = dateFormat(revisions[revisions.length - 1])
   return [-end, -start]
