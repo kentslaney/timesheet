@@ -314,7 +314,7 @@ function offerTimes(c1) {
 // E2=BYROW(A2:A,LAMBDA(i, IF(ISBLANK(i),,LAMBDA(j, SUM(FILTER(INDEX(j,0,2),INDEX(j,0,1)>=DATE(YEAR(i),MONTH(i),DAY(i)-MOD(WEEKDAY(i-2),7))))/60)(INDIRECT("R" & ROW(i) & "C1:C2", false)))))
 // F1=SUM(B2:B)/(MAX(A2:A)-MIN(A2:A)+1)/60*7/5
 
-/* conditional formatting */
+/** 0.1 **/ /* conditional formatting */
 // E2:E=IF(ISBLANK(A2),false,IF(ROW()=2,true,OR(ARRAYFORMULA(WEEKDAY(SEQUENCE(DATEDIF(A2,A1,"D"),1,A2+1))=2))))
 
 /* values */
