@@ -1,3 +1,4 @@
+"use strict"
 "use drivesdk"
 
 /*** timer ***/
@@ -248,7 +249,7 @@ function local_tz(init) {
   return addMinutes(obj, obj.getTimezoneOffset())
 }
 
-MS24H = 24 * 60 * 60 * 1000
+const MS24H = 24 * 60 * 60 * 1000
 
 function listRevisions(fileId) {
   // DETOUR (kentslaney) - Could be a generator
