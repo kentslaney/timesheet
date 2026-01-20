@@ -1,10 +1,10 @@
 "use strict"
-"use drivesdk"
+"use sheetsdk"
 
 /*** timer ***/
 /* primary sheet */
 
-/** 0.1 **/ /* buttons */
+/** 0.1 **/ /* actions */
 // A6=mark
 // A7=newNotes
 // A8=dupNotes

@@ -1,0 +1,3 @@
+- multi-line regions only support 1 row or 1 column
+- a version number before is a maximum guaranteed (required for experimental features pending a stable API) while after is a minimum required (for features not in the section's base spec)
+- a cell with multiple notes are formatted as (ordered) paragraphs (Google Sheets supports multiple \[authored\] comments, not multiple notes)
