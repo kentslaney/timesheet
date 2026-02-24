@@ -307,7 +307,7 @@ async function createSpreadsheet(parsed, title, scriptCode) {
         try {
             await createBoundScript(spreadsheetId, scriptCode, title);
         } catch (err) {
-            console.warn('Failed to attach Apps Script (user may need to enable the Apps Script API):', err.message);
+            showStatus('Apps Script not attached: ' + err.message, 'error');
         }
     }
 
