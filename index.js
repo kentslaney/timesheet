@@ -27,7 +27,7 @@
 // A1=goal time per day (for earliest end)
 // A3=Spreadsheet time
 // A4=Offset from spreadsheet time to AppsScript time
-// A4=Time of day
+// A5=Time of day
 // A9=1 if the timer is running, 0 otherwise. B1 is also conditionally formatted to be green when this is 1. Running across midnight will delay day column creation until user action.
 // A9=(first expression is to add a dependency to the placeholder cells)
 /* A10:A15
