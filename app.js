@@ -28,6 +28,7 @@ const signOutBtn = document.getElementById('sign-out-btn');
 const authStatus = document.getElementById('auth-status');
 const titleInput = document.getElementById('spreadsheet-title');
 const removeFileBtn = document.getElementById('remove-file');
+const exampleChips = document.querySelectorAll('.chip[data-example]');
 
 // Initialize Google Auth
 function initApp() {
@@ -83,6 +84,11 @@ function setupFileHandlers() {
         clearFile();
     });
 
+    // Example chips
+    exampleChips.forEach(chip => {
+        chip.addEventListener('click', () => loadExample(chip));
+    });
+
     // Create button
     createBtn.addEventListener('click', handleCreate);
 
@@ -99,29 +105,48 @@ function handleFile(file) {
 
     const reader = new FileReader();
     reader.onload = (e) => {
-        const content = e.target.result;
-
-        if (!validateHeader(content)) {
-            showFileError('Invalid file: must start with "use sheetsdk"');
-            currentFile = null;
-            parsedSpec = null;
-            updateUI();
-            return;
-        }
-
-        try {
-            parsedSpec = parseSheetSDK(content);
-            currentFile = { name: file.name, content };
-            showPreview();
-            updateUI();
-        } catch (err) {
-            showFileError(`Parse error: ${err.message}`);
-            currentFile = null;
-            parsedSpec = null;
-            updateUI();
-        }
+        handleFileContent(file.name, e.target.result);
     };
     reader.readAsText(file);
+}
+
+function handleFileContent(name, content) {
+    if (!validateHeader(content)) {
+        showFileError('Invalid file: must start with "use sheetsdk"');
+        currentFile = null;
+        parsedSpec = null;
+        updateUI();
+        return;
+    }
+
+    try {
+        parsedSpec = parseSheetSDK(content);
+        currentFile = { name, content };
+        showPreview();
+        updateUI();
+    } catch (err) {
+        showFileError(`Parse error: ${err.message}`);
+        currentFile = null;
+        parsedSpec = null;
+        updateUI();
+    }
+}
+
+async function loadExample(chip) {
+    const path = chip.dataset.example;
+    chip.classList.add('loading');
+    try {
+        const res = await fetch(path);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const content = await res.text();
+        const name = path.split('/').pop();
+        clearFile();
+        handleFileContent(name, content);
+    } catch (err) {
+        showFileError(`Could not load example: ${err.message}`);
+    } finally {
+        chip.classList.remove('loading');
+    }
 }
 
 function showFileError(msg) {

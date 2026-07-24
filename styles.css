@@ -371,6 +371,64 @@ body {
 }
 
 /* ============================================
+   Examples Row
+   ============================================ */
+
+.examples-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+
+.examples-label {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.examples-chips {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: 20px;
+  background: rgba(52, 211, 153, 0.07);
+  border: 1px solid rgba(52, 211, 153, 0.18);
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.chip:hover {
+  background: var(--accent-dim);
+  border-color: rgba(52, 211, 153, 0.4);
+  transform: translateY(-1px);
+  box-shadow: 0 3px 12px rgba(52, 211, 153, 0.15);
+}
+
+.chip:active {
+  transform: translateY(0);
+}
+
+.chip.loading {
+  opacity: 0.6;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* ============================================
    File Info
    ============================================ */
 
