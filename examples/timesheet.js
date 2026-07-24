@@ -12,19 +12,22 @@
 /* formulas */
 // B3=LAMBDA(t,IF(AND(TODAY()=B1,$A$1>B2),QUOTIENT(MOD(t,24*60),60)*100+MOD(t, 60),""))(QUOTIENT($A$1, 100)*60+MOD($A$1,100)-(SUM(BYROW({B4:B,ARRAYFORMULA(ROW(B4:B))},LAMBDA(row,(QUOTIENT(INDEX(row,1), 100)*60+MOD(INDEX(row,1),100))*IF(MOD(INDEX(row,2),2),1,-1))))-IF(MOD(COUNTA(B4:B),2),,QUOTIENT($A$5, 100)*60+MOD($A$5,100))))
 // B2=LAMBDA(t,QUOTIENT(t,60)*100+MOD(t, 60))(SUM(BYROW({B4:B,ARRAYFORMULA(ROW(B4:B))},LAMBDA(row,(QUOTIENT(INDEX(row,1), 100)*60+MOD(INDEX(row,1),100))*IF(MOD(INDEX(row,2),2),1,-1))))+IF(MOD(COUNTA(B4:B),2),IF(TODAY()=B1,QUOTIENT($A$5, 100)*60+MOD($A$5,100),24*60)))
-// A5=MINUTE(NOW()) + (HOUR(NOW()) - HOUR(TODAY())) * 100
+// A3=MINUTE(NOW()) + (HOUR(NOW()) - HOUR(TODAY())) * 100
+// A4=LAMBDA(t,QUOTIENT(t,60)*100+MOD(t, 60))(-sheet_tz_neg_min())
+// A5=LAMBDA(t,QUOTIENT(t,60)*100+MOD(t, 60))(QUOTIENT($A$3, 100)*60+MOD($A$3,100)+QUOTIENT($A$4, 100)*60+MOD($A$4,100))
 // A9=IF(AND(A7="toggle", A8="update"),,) + AND(TODAY()=INDIRECT("B1"),MOD(COUNTA(INDIRECT("B4:B")),2))
 // A10=ARRAYFORMULA({"1kPUeEVGR-eUKYQJGZ82z9zolk8W11mIStZcMzWJvtlI"; "toggle"; "update"; "mark"; "notes"; "duplicate"})
 
 /* values */
 // A1=800
 // A2="total"
-// A3="earliest end"
-// A4="ToD"
 // B1=1970-01-01
 
 /* notes */
 // A1=goal time per day (for earliest end)
+// A3=Spreadsheet time
+// A4=Offset from spreadsheet time to AppsScript time
+// A4=Time of day
 // A9=1 if the timer is running, 0 otherwise. B1 is also conditionally formatted to be green when this is 1. Running across midnight will delay day column creation until user action.
 // A9=(first expression is to add a dependency to the placeholder cells)
 /* A10:A15
@@ -240,13 +243,14 @@ function fixFormat(id) {
   if (rules_updated) sheet.setConditionalFormatRules(rules);
 }
 
-function addMinutes(date, minutes) {
-    return new Date(date.getTime() + minutes*60000);
-}
-
-function local_tz(init) {
-  let obj = new Date(init)
-  return addMinutes(obj, obj.getTimezoneOffset())
+function sheet_tz_neg_min() {
+  // new Date().getTimezoneOffset();
+  let sheet = SpreadsheetApp.getActiveSheet();
+  let sheet_time = sheet.getRange("A3").getValue();
+  let script_time = new Date()
+  let sheet_min = Math.trunc(sheet_time / 100) * 60 + sheet_time % 100
+  let script_min = script_time.getHours() * 60 + script_time.getMinutes()
+  return sheet_min - script_min
 }
 
 const MS24H = 24 * 60 * 60 * 1000
